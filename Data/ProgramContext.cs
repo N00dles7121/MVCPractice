@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MVCPractice.Models;
 
 namespace MVCPractice.Data
 {
@@ -12,5 +13,7 @@ namespace MVCPractice.Data
         {
 
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
