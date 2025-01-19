@@ -29,6 +29,10 @@ namespace MVCPractice.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            if(category.Name == category.DisplayOrder.ToString()){
+                ModelState.AddModelError("", "Name and Display Order cannot be the same.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(category);
