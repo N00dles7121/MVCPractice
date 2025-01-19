@@ -35,9 +35,23 @@ namespace MVCPractice.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
+
+            try
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the category.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the category. Please try again.");
+                return View(category);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
