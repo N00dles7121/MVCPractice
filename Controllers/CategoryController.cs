@@ -52,6 +52,39 @@ namespace MVCPractice.Controllers
             }
         }
 
+        public IActionResult Edit(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
+
+            try
+            {
+                _context.Categories.Update(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the category.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the category. Please try again.");
+                return View(category);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
