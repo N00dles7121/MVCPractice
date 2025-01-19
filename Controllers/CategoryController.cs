@@ -85,6 +85,41 @@ namespace MVCPractice.Controllers
             }
         }
 
+        public IActionResult Delete(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeletePOST(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while deleting the category.");
+                ModelState.AddModelError(string.Empty, "An error occurred while deleting the category. Please try again.");
+                return View(category);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,0 +1,27 @@
+﻿@model Category
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2>Confirm category deletion</h2>
+            <hr>
+        </div>
+        <div class="mb-3 p-1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="p-0">Category Name</label>
+            <input asp-for="Name" class="form-control" disabled>
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Display Order</label>
+            <input asp-for="DisplayOrder" class="form-control" disabled>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-danger form-control">Confirm</button>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary form-control">Go back</a>
+            </div>
+        </div>
+    </div>
+</form>
