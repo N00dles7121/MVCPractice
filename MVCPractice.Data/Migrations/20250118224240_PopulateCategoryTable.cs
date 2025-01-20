@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace MVCPractice.Migrations
+namespace MVCPractice.Data.Migrations
 {
     /// <inheritdoc />
     public partial class PopulateCategoryTable : Migration

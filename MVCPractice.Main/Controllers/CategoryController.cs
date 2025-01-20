@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MVCPractice.Data;
+using MVCPractice.Data.Data;
 using MVCPractice.Models;
+
 
 namespace MVCPractice.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly ILogger<CategoryController> _logger;
+
         private readonly ProgramContext _context;
 
         public CategoryController(ILogger<CategoryController> logger, ProgramContext context)

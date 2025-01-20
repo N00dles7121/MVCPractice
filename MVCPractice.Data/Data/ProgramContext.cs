@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MVCPractice.Models;
 
-namespace MVCPractice.Data
+namespace MVCPractice.Data.Data
 {
     public class ProgramContext : DbContext
     {

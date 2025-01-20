@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MVCPractice.Migrations
+namespace MVCPractice.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

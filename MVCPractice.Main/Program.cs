@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MVCPractice.Data;
+using MVCPractice.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
