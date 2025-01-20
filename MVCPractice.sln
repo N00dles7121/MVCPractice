@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCPractice", "MVCPractice.csproj", "{6E90D590-B66D-497D-95D8-B82E4E9C4C85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCPractice", "MVCPractice.Main\MVCPractice.csproj", "{7BA14815-A60B-49F9-830E-C9DBBDC8B897}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{6E90D590-B66D-497D-95D8-B82E4E9C4C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E90D590-B66D-497D-95D8-B82E4E9C4C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E90D590-B66D-497D-95D8-B82E4E9C4C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BA14815-A60B-49F9-830E-C9DBBDC8B897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA14815-A60B-49F9-830E-C9DBBDC8B897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA14815-A60B-49F9-830E-C9DBBDC8B897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA14815-A60B-49F9-830E-C9DBBDC8B897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,10 @@
-bin
-obj
-Properties
+MVCPractice.Main/bin
+MVCPractice.Main/obj
+MVCPractice.Data/bin
+MVCPractice.Data/obj
+MVCPractice.Models/bin
+MVCPractice.Models/obj
+MVCPractice.Main/Properties
 appsettings.Development.json
 appsettings.json
 MVCPractice.csproj
