@@ -17,8 +17,17 @@ namespace MVCPractice.Controllers
 
         public IActionResult Index()
         {
-            var categories = _context.Categories.ToList();
-            return View(categories);
+            try
+            {
+                var categories = _context.Categories.ToList();
+                return View(categories);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching the categories.");
+                TempData["ErrorMessage"] = "An error occurred while fetching the categories. Please try again.";
+                return View();
+            }
         }
 
         public IActionResult Create()
@@ -29,7 +38,8 @@ namespace MVCPractice.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if(category.Name == category.DisplayOrder.ToString()){
+            if (category.Name == category.DisplayOrder.ToString())
+            {
                 ModelState.AddModelError("", "Name and Display Order cannot be the same.");
             }
 
@@ -42,20 +52,22 @@ namespace MVCPractice.Controllers
             {
                 _context.Categories.Add(category);
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "Category created successfully!";
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while creating the category.");
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the category. Please try again.");
-                return View(category);
+                TempData["ErrorMessage"] = "An error occurred while creating the category. Please try again.";
+                return View("Index");
             }
         }
 
         public IActionResult Edit(int id)
         {
             var category = _context.Categories.Find(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
@@ -75,20 +87,22 @@ namespace MVCPractice.Controllers
             {
                 _context.Categories.Update(category);
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "Category updated successfully!";
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while creating the category.");
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the category. Please try again.");
-                return View(category);
+                TempData["ErrorMessage"] = "An error occurred while updating the category. Please try again.";
+                return View("Index");
             }
         }
 
         public IActionResult Delete(int id)
         {
             var category = _context.Categories.Find(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
@@ -101,7 +115,7 @@ namespace MVCPractice.Controllers
         public IActionResult DeletePOST(int id)
         {
             var category = _context.Categories.Find(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
@@ -110,13 +124,15 @@ namespace MVCPractice.Controllers
             {
                 _context.Categories.Remove(category);
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "Category deleted successfully!";
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while deleting the category.");
-                ModelState.AddModelError(string.Empty, "An error occurred while deleting the category. Please try again.");
-                return View(category);
+                TempData["ErrorMessage"] = "An error occurred while deleting the category. Please try again.";
+                return View("Index");
             }
         }
 

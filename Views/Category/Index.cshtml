@@ -3,6 +3,8 @@
 }
 @model IEnumerable<MVCPractice.Models.Category>
 
+<partial name="_SuccessErrorMessage" />
+
 <div class="container">
     <div class="row pt-4 pb-23">
         <div class="col-6">
@@ -17,6 +19,7 @@
     <table class="table table-bordered table-striped">
         <thead class="table-light">
             <tr>
+                using Microsoft.IdentityModel.Tokens;
                 <th>
                     Category Name
                 </th>
@@ -27,24 +30,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.OrderBy(x => x.DisplayOrder))
+            @if (Model is not null)
             {
-                <tr class="table-dark">
-                    <td>@item.Name</td>
-                    <td>@item.DisplayOrder</td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"
-                                class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-fill">Edit</i>
-                            </a>
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"
-                                class="btn btn-danger mx-2">
-                                <i class="bi bi-trash3-fill">Delete</i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
+                foreach (var item in Model.OrderBy(x => x.DisplayOrder))
+                {
+                    <tr class="table-dark">
+                        <td>@item.Name</td>
+                        <td>@item.DisplayOrder</td>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"
+                                    class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-fill">Edit</i>
+                                </a>
+                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"
+                                    class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash3-fill">Delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
