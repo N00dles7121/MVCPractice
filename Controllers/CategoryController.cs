@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVCPractice.Data;
 using MVCPractice.Models;
 
@@ -15,11 +16,11 @@ namespace MVCPractice.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var categories = _context.Categories.ToList();
+                var categories = await _context.Categories.ToListAsync();
                 return View(categories);
             }
             catch (Exception ex)
@@ -36,7 +37,7 @@ namespace MVCPractice.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             if (category.Name == category.DisplayOrder.ToString())
             {
@@ -50,8 +51,8 @@ namespace MVCPractice.Controllers
 
             try
             {
-                _context.Categories.Add(category);
-                _context.SaveChanges();
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Category created successfully!";
 
                 return RedirectToAction("Index");
@@ -64,9 +65,9 @@ namespace MVCPractice.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -76,7 +77,7 @@ namespace MVCPractice.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Category category)
+        public async Task<IActionResult> Edit(Category category)
         {
             if (!ModelState.IsValid)
             {
@@ -86,7 +87,7 @@ namespace MVCPractice.Controllers
             try
             {
                 _context.Categories.Update(category);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Category updated successfully!";
 
                 return RedirectToAction("Index");
@@ -99,9 +100,9 @@ namespace MVCPractice.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -112,9 +113,9 @@ namespace MVCPractice.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        public IActionResult DeletePOST(int id)
+        public async Task<IActionResult> DeletePOST(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -123,7 +124,7 @@ namespace MVCPractice.Controllers
             try
             {
                 _context.Categories.Remove(category);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Category deleted successfully!";
 
                 return RedirectToAction("Index");
