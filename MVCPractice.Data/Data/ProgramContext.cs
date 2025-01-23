@@ -10,9 +10,9 @@ namespace MVCPractice.Data.Data
 
         }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Film> Films { get; set; }
-        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Category> Categories { get; init; }
+        public DbSet<Film> Films { get; init; }
+        public DbSet<Actor> Actors { get; init; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
