@@ -11,12 +11,12 @@ public class Actor
     public int Id { get; set; }
 
     [MaxLength(100)]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     public DateOnly DateOfBirth { get; set; }
 
     [MaxLength(100)]
-    public string CountryOfBirth { get; set; }
+    public string? CountryOfBirth { get; set; }
 
     public List<Film> Films { get; set; } = [];
 }
