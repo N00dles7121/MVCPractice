@@ -15,12 +15,15 @@ public abstract class Repo<T> where T : class
         _dbSet = _context.Set<T>();
     }
 
-    public virtual async Task<IEnumerable<T>> GetAll()
+    public abstract Task UpdateAsync(T entity);
+    public abstract Task UpdateAsync(int id);
+
+    public virtual async Task<List<T>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
     }
 
-    public virtual async Task<T> Get(Expression<Func<T, bool>> filter)
+    public virtual async Task<T> GetAsync(Expression<Func<T, bool>> filter)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(filter);
 
@@ -32,7 +35,7 @@ public abstract class Repo<T> where T : class
         return entity;
     }
 
-    public virtual async Task<T> GetById(int id)
+    public virtual async Task<T> GetByIdAsync(int id)
     {
         var entity = await _dbSet.FindAsync(id);
 
@@ -44,15 +47,13 @@ public abstract class Repo<T> where T : class
         return entity;
     }
 
-    public virtual async Task Add(T entity)
+    public virtual async Task AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
 
-    public abstract Task Update(T entity);
-
-    public virtual async Task Delete(T entity)
+    public virtual async Task DeleteAsync(T entity)
     {
         if (entity == null || await _dbSet.FindAsync(entity) == null)
         {
@@ -63,13 +64,13 @@ public abstract class Repo<T> where T : class
         await _context.SaveChangesAsync();
     }
 
-    public virtual async Task DeleteRange(IEnumerable<T> entities)
+    public virtual async Task DeleteRangeAsync(IEnumerable<T> entities)
     {
         _dbSet.RemoveRange(entities);
         await _context.SaveChangesAsync();
     }
 
-    public virtual async Task DeleteRange(Expression<Func<T, bool>> filter)
+    public virtual async Task DeleteRangeAsync(Expression<Func<T, bool>> filter)
     {
         var entities = await _dbSet.Where(filter).ToListAsync();
         _dbSet.RemoveRange(entities);
