@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,21 +15,23 @@ public class CategoryController : Controller
 {
     private readonly ILogger<CategoryController> _logger;
 
-    private readonly ProgramContext _context;
+    private readonly CategoryRepo _categoryRepo;
 
-    public CategoryController(ILogger<CategoryController> logger, ProgramContext context)
+    public CategoryController(ILogger<CategoryController> logger, CategoryRepo categoryRepo)
     {
         _logger = logger;
-        _context = context;
+        _categoryRepo = categoryRepo;
     }
 
     public async Task<IActionResult> Index()
     {
         try
         {
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _categoryRepo.GetAll();
+            categories.ToList();
             return View(categories);
         }
+
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while fetching the categories.");
@@ -57,8 +60,7 @@ public class CategoryController : Controller
 
         try
         {
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
+            await _categoryRepo.Add(category);
             TempData["SuccessMessage"] = "Category created successfully!";
 
             return RedirectToAction("Index");
@@ -73,13 +75,17 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
-        if (category == null)
+        try
         {
-            return NotFound();
+            var category = await _categoryRepo.GetById(id);
+            return View(category);
         }
-
-        return View(category);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while fetching the category.");
+            TempData["ErrorMessage"] = "An error occurred while fetching the category. Please try again.";
+            return View("Index");
+        }
     }
 
     [HttpPost]
@@ -92,8 +98,7 @@ public class CategoryController : Controller
 
         try
         {
-            _context.Categories.Update(category);
-            await _context.SaveChangesAsync();
+            await _categoryRepo.Update(category);
             TempData["SuccessMessage"] = "Category updated successfully!";
 
             return RedirectToAction("Index");
@@ -108,29 +113,26 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
-        if (category == null)
+        try
         {
-            return NotFound();
+            var category = await _categoryRepo.GetById(id);
+            return View(category);
         }
-
-        return View(category);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while fetching the category.");
+            TempData["ErrorMessage"] = "An error occurred while fetching the category. Please try again.";
+            return View("Index");
+        }
     }
 
     [HttpPost]
     [ActionName("Delete")]
     public async Task<IActionResult> DeletePOST(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
-        if (category == null)
-        {
-            return NotFound();
-        }
-
         try
         {
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _categoryRepo.Delete(id);
             TempData["SuccessMessage"] = "Category deleted successfully!";
 
             return RedirectToAction("Index");
