@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Movies";
+}
+
+@model IEnumerable<Models.Movie>
+
+<div class="card m-3" style="border-radius: .5rem;">
+    <div class="card-header bg-primary" style="border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+        <div class="col-12 text-center">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="col-12 text-end"><a asp-controller="Movie" asp-action="Create" class="btn btn-outline-success"><i
+                    class="bi bi-plus-square"></i>&nbsp; Add New</a></div>
+    </div>
+</div>
