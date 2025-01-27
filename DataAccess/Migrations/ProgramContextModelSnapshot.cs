@@ -46,7 +46,7 @@ namespace MVCPractice.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DisplayOrder")
-                        .HasColumnType("int(1, 100)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

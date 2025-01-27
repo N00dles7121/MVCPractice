@@ -6,6 +6,8 @@ public class Category
 {
     public int Id { get; set; }
     public string Name { get; set; }
+
+    [Range(1, 100)]
     public int DisplayOrder { get; set; }
     public List<Movie> Movies { get; set; } = null!;
 
