@@ -7,14 +7,12 @@ public class Category
     public int Id { get; set; }
     public string Name { get; set; }
     public int DisplayOrder { get; set; }
-    public List<Movie> Movies { get; set; }
+    public List<Movie> Movies { get; set; } = null!;
 
 
     // Get rid of nullable reference types warning
-    public Category(string name, int displayOrder, List<Movie> movies)
+    public Category(string name)
     {
         Name = name;
-        DisplayOrder = displayOrder;
-        Movies = movies;
     }
 }

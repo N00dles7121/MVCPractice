@@ -11,15 +11,14 @@ namespace Models
         public string FullName { get; set; }
         public string? CounryOfBirth { get; set; }
         public DateOnly? DateOfBirth { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<Movie> Movies { get; set; } = null!;
 
 
         // Get rid of nullable reference types warning
-        public Actor(string fullName, string counryOfBirth, List<Movie> movies)
+        public Actor(string fullName, string counryOfBirth)
         {
             FullName = fullName;
             CounryOfBirth = counryOfBirth;
-            Movies = movies;
         }
     }
 }

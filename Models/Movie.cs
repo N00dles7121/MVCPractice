@@ -15,17 +15,15 @@ namespace Models
         public decimal? Rating { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
 
-        public List<Actor> Actors { get; set; }
+        public List<Actor> Actors { get; set; } = null!;
 
 
         // Get rid of nullable reference types warning
-        public Movie(string title, List<Actor> actors, Category category)
+        public Movie(string title)
         {
             Title = title;
-            Actors = actors;
-            Category = category;
         }
     }
 }
