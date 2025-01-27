@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCPractice.DataAccess.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20250127003246_MoviesAndActorsTables")]
+    [Migration("20250127005152_MoviesAndActorsTables")]
     partial class MoviesAndActorsTables
     {
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace MVCPractice.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DisplayOrder")
-                        .HasColumnType("int(1, 100)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

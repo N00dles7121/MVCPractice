@@ -21,14 +21,6 @@ namespace MVCPractice.DataAccess.Migrations
                 oldType: "nvarchar(50)",
                 oldMaxLength: 50);
 
-            migrationBuilder.AlterColumn<int>(
-                name: "DisplayOrder",
-                table: "Categories",
-                type: "int(1, 100)",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
-
             migrationBuilder.CreateTable(
                 name: "Actors",
                 columns: table => new
@@ -122,14 +114,6 @@ namespace MVCPractice.DataAccess.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
                 oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "DisplayOrder",
-                table: "Categories",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int(1, 100)");
         }
     }
 }
