@@ -34,7 +34,7 @@ namespace MVCPractice.DataAccess.Migrations
 
                     b.HasIndex("MoviesId");
 
-                    b.ToTable("ActorMovie");
+                    b.ToTable("ActorMovie", (string)null);
                 });
 
             modelBuilder.Entity("MVCPractice.Models.Category", b =>
@@ -55,7 +55,7 @@ namespace MVCPractice.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Models.Actor", b =>
@@ -80,7 +80,7 @@ namespace MVCPractice.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("Models.Movie", b =>
@@ -109,7 +109,7 @@ namespace MVCPractice.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("ActorMovie", b =>

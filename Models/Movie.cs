@@ -10,7 +10,7 @@ namespace Models
     public class Movie
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public DateOnly? ReleaseDate { get; set; }
         public decimal? Rating { get; set; }
 
@@ -18,12 +18,5 @@ namespace Models
         public Category Category { get; set; } = null!;
 
         public List<Actor> Actors { get; set; } = null!;
-
-
-        // Get rid of nullable reference types warning
-        public Movie(string title)
-        {
-            Title = title;
-        }
     }
 }

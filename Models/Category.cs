@@ -5,16 +5,9 @@ namespace MVCPractice.Models;
 public class Category
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [Range(1, 100)]
     public int DisplayOrder { get; set; }
-    public List<Movie> Movies { get; set; } = null!;
-
-
-    // Get rid of nullable reference types warning
-    public Category(string name)
-    {
-        Name = name;
-    }
+    public ICollection<Movie> Movies { get; set; } = new List<Movie>();
 }
