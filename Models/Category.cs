@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Models;
 
-namespace MVCPractice.Models;
+namespace Models;
 public class Category
 {
     public int Id { get; set; }

@@ -1,6 +1,6 @@
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using MVCPractice.Models;
+using Models;
 
 namespace MVCPractice.Controllers;
 public class CategoryController : Controller

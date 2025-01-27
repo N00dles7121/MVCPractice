@@ -1,6 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using MVCPractice.Models;
+using Models;
 
 namespace DataAccess.EFConfig;
 
