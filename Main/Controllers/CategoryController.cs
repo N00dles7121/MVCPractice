@@ -20,7 +20,6 @@ public class CategoryController : Controller
         try
         {
             var categories = await _categoryRepo.GetAll();
-            categories.ToList();
             return View(categories);
         }
 

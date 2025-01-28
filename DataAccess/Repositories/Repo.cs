@@ -14,7 +14,7 @@ namespace DataAccess.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public virtual async Task<List<T>> GetAll()
+        public virtual async Task<ICollection<T>> GetAll()
         {
             return await _dbSet.ToListAsync();
         }
