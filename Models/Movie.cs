@@ -15,8 +15,8 @@ namespace Models
         public decimal? Rating { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
+        public Category? Category { get; set; }
 
-        public List<Actor> Actors { get; set; } = null!;
+        public List<Actor> Actors { get; set; } = new List<Actor>();
     }
 }
