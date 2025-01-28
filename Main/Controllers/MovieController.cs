@@ -10,9 +10,11 @@ namespace Main.Controllers
     {
         private readonly MovieRepo _movieRepo;
         private readonly CategoryRepo _categoryRepo;
+        private MovieCategoryVM _movieCategoryVM;
 
         public MovieController(MovieRepo movieRepo, CategoryRepo categoryRepo)
         {
+            _movieCategoryVM = new MovieCategoryVM();
             _movieRepo = movieRepo;
             _categoryRepo = categoryRepo;
         }
@@ -22,8 +24,14 @@ namespace Main.Controllers
         {
             try
             {
-                var movies = await _movieRepo.GetAll();
-                return View(movies);
+                _movieCategoryVM.Movies = (List<Movie>)await _movieRepo.GetAll();
+
+                foreach (var movie in _movieCategoryVM.Movies)
+                {
+                    movie.Category = await _categoryRepo.GetById(movie.CategoryId);
+                }
+
+                return View(_movieCategoryVM);
             }
             catch
             {
@@ -36,11 +44,8 @@ namespace Main.Controllers
         {
             var categories = await _categoryRepo.GetAll();
 
-            MovieCategoryVM movieCategoryVM = new MovieCategoryVM
-            {
-                Categories = categories.ToList()
-            };
-            return View(movieCategoryVM);
+            _movieCategoryVM.Categories = categories.ToList();
+            return View(_movieCategoryVM);
         }
 
         [HttpPost]
@@ -53,8 +58,8 @@ namespace Main.Controllers
 
             try
             {
-                movieCategoryVM.Movie.Category = await _categoryRepo.GetById(movieCategoryVM.Movie.CategoryId);
-                await _movieRepo.Add(movieCategoryVM.Movie);
+                _movieCategoryVM.Movie = movieCategoryVM.Movie;
+                await _movieRepo.Add(_movieCategoryVM.Movie);
                 TempData["SuccessMessage"] = "Movie created successfully!";
 
                 return RedirectToAction("Index");
