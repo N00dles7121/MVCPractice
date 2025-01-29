@@ -67,7 +67,41 @@ namespace Main.Controllers
             catch
             {
                 TempData["ErrorMessage"] = "An error occurred while creating the movie. Please try again.";
-                return View(movieCategoryVM.Movie);
+                return View(movieCategoryVM);
+            }
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                _movieCategoryVM.Movie = await _movieRepo.GetById(id);
+                _movieCategoryVM.Movie.Category = await _categoryRepo.GetById(_movieCategoryVM.Movie.CategoryId);
+
+                return View(_movieCategoryVM.Movie);
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleteing the movie. Please try again.";
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeletePOST(int id)
+        {
+            try
+            {
+                await _movieRepo.Delete(id);
+                TempData["SuccessMessage"] = "Category deleted successfully!";
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the category. Please try again.";
+                return View("Index");
             }
         }
     }
