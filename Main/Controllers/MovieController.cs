@@ -53,7 +53,10 @@ namespace Main.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(movieCategoryVM);
+                _movieCategoryVM.Categories = (List<Category>)await _categoryRepo.GetAll();
+                _movieCategoryVM.Movie = movieCategoryVM.Movie;
+
+                return View(_movieCategoryVM);
             }
 
             try
