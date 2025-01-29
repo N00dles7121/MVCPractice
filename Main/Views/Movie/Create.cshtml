@@ -31,6 +31,11 @@
             <input asp-for="Movie.ReleaseDate" type="date" class="form-control">
             <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
         </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Rating</label>
+            <input asp-for="Movie.Rating" class="form-control" type="number" step=".01">
+            <span asp-validation-for="Movie.Rating" class="text-danger"></span>
+        </div>
         <div class="row">
             <div class="col-6">
                 <button type="submit" class="btn btn-light form-control">Create</button>
