@@ -7,8 +7,15 @@ namespace Models.ViewModels
 {
     public class MovieCategoryVM
     {
-        public Movie? Movie { get; set; }
-        public List<Category> Categories { get; set; } = new List<Category>();
-        public List<Movie> Movies { get; set; } = new List<Movie>();
+        public Movie Movie { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<Movie> Movies { get; set; }
+
+        public MovieCategoryVM()
+        {
+            Movie = new Movie { Title = "Title" };
+            Categories = new List<Category>();
+            Movies = new List<Movie>();
+        }
     }
 }
