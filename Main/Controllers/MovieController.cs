@@ -60,7 +60,10 @@ namespace Main.Controllers
             try
             {
                 _movieCategoryVM.Movie = movieCategoryVM.Movie;
-                await _movieRepo.Add(_movieCategoryVM.Movie);
+
+                Movie movie = _movieCategoryVM.Movie.ToModel();
+                await _movieRepo.Add(movie);
+
                 TempData["SuccessMessage"] = "Movie created successfully!";
 
                 return RedirectToAction("Index");
@@ -76,7 +79,8 @@ namespace Main.Controllers
         {
             try
             {
-                _movieCategoryVM.Movie = await _movieRepo.GetById(id);
+                var movie = await _movieRepo.GetById(id);
+                _movieCategoryVM.Movie = movie.ToDto();
 
                 return View(_movieCategoryVM);
             }
@@ -88,7 +92,7 @@ namespace Main.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(MovieCategoryVM movieCategoryVM)
+        public async Task<IActionResult> Edit(MovieCategoryVM movieCategoryVM, int id)
         {
 
             if (!ModelState.IsValid)
@@ -100,7 +104,7 @@ namespace Main.Controllers
 
             try
             {
-                await _movieRepo.Update(movieCategoryVM.Movie);
+                await _movieRepo.ExecuteUpdateAsync(movieCategoryVM.Movie, id);
                 TempData["SuccessMessage"] = "Movie created successfully!";
 
                 return RedirectToAction("Index");
@@ -116,11 +120,11 @@ namespace Main.Controllers
         {
             try
             {
-                _movieCategoryVM.Movie = await _movieRepo.GetById(id);
-                _movieCategoryVM.Movie.Category = _movieCategoryVM.Categories
-                                                    .First(c => c.Id == _movieCategoryVM
-                                                                        .Movie
-                                                                        .CategoryId);
+                Movie movie = await _movieRepo.GetById(id);
+                _movieCategoryVM.Movie = movie.ToDto();
+
+                _movieCategoryVM.Movie.CategoryName = _movieCategoryVM.Categories
+                                                    .First(c => c.Id == movie.CategoryId).Name;
 
                 return View(_movieCategoryVM.Movie);
             }
