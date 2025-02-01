@@ -70,7 +70,47 @@ namespace Main.Controllers
             catch
             {
                 TempData["ErrorMessage"] = "An error occurred while creating the movie. Please try again.";
-                return View(movieCategoryVM);
+                return View(_movieCategoryVM);
+            }
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                _movieCategoryVM.Movie = await _movieRepo.GetById(id);
+
+                return View(_movieCategoryVM);
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "An error occurred while fetching the movie. Please try again.";
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(MovieCategoryVM movieCategoryVM)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                _movieCategoryVM.Movie = movieCategoryVM.Movie;
+
+                return View(_movieCategoryVM);
+            }
+
+            try
+            {
+                await _movieRepo.Update(movieCategoryVM.Movie);
+                TempData["SuccessMessage"] = "Movie created successfully!";
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "An error occurred while editing the movie. Please try again.";
+                return View(_movieCategoryVM);
             }
         }
 
