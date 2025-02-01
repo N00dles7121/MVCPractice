@@ -17,6 +17,8 @@ namespace Main.Controllers
             _movieCategoryVM = new MovieCategoryVM();
             _movieRepo = movieRepo;
             _categoryRepo = categoryRepo;
+
+            _movieCategoryVM.Categories = _categoryRepo.GetAll().ToList();
         }
 
         // GET: MovieController
@@ -24,7 +26,7 @@ namespace Main.Controllers
         {
             try
             {
-                _movieCategoryVM.Movies = (List<Movie>)await _movieRepo.GetAll();
+                _movieCategoryVM.Movies = (List<Movie>)await _movieRepo.GetAllAsync();
 
                 foreach (var movie in _movieCategoryVM.Movies)
                 {
@@ -40,11 +42,8 @@ namespace Main.Controllers
             }
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var categories = await _categoryRepo.GetAll();
-
-            _movieCategoryVM.Categories = categories.ToList();
             return View(_movieCategoryVM);
         }
 
@@ -53,7 +52,6 @@ namespace Main.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _movieCategoryVM.Categories = (List<Category>)await _categoryRepo.GetAll();
                 _movieCategoryVM.Movie = movieCategoryVM.Movie;
 
                 return View(_movieCategoryVM);
@@ -119,7 +117,10 @@ namespace Main.Controllers
             try
             {
                 _movieCategoryVM.Movie = await _movieRepo.GetById(id);
-                _movieCategoryVM.Movie.Category = await _categoryRepo.GetById(_movieCategoryVM.Movie.CategoryId);
+                _movieCategoryVM.Movie.Category = _movieCategoryVM.Categories
+                                                    .First(c => c.Id == _movieCategoryVM
+                                                                        .Movie
+                                                                        .CategoryId);
 
                 return View(_movieCategoryVM.Movie);
             }
@@ -137,13 +138,13 @@ namespace Main.Controllers
             try
             {
                 await _movieRepo.Delete(id);
-                TempData["SuccessMessage"] = "Category deleted successfully!";
+                TempData["SuccessMessage"] = "Movie deleted successfully!";
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                TempData["ErrorMessage"] = "An error occurred while deleting the category. Please try again.";
+                TempData["ErrorMessage"] = "An error occurred while deleting the movie. Please try again.";
                 return View("Index");
             }
         }
