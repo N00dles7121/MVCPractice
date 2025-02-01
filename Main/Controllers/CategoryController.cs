@@ -19,7 +19,7 @@ public class CategoryController : Controller
     {
         try
         {
-            var categories = await _categoryRepo.GetAll();
+            var categories = await _categoryRepo.GetAllAsync();
             return View(categories);
         }
 
