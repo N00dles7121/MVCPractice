@@ -1,22 +1,26 @@
-using Models.DTOs;
-
-namespace Models
+namespace Models.DTOs
 {
-    public class Movie
+    public class MovieDTO
     {
-        public int Id { get; set; }
         public required string Title { get; set; }
         public DateOnly? ReleaseDate { get; set; }
         public decimal? Rating { get; set; }
-
         public int CategoryId { get; set; }
-        public Category? Category { get; set; }
-
+        public string? CategoryName { get; set; }
         public List<Actor> Actors { get; set; } = new List<Actor>();
 
-        public MovieDTO ToDto()
+        public void ToModel(Movie movie)
         {
-            MovieDTO dto = new MovieDTO
+            movie.Title = Title;
+            movie.ReleaseDate = ReleaseDate;
+            movie.Rating = Rating;
+            movie.CategoryId = CategoryId;
+            movie.Actors = Actors;
+        }
+
+        public Movie ToModel()
+        {
+            Movie movie = new Movie
             {
                 Title = Title,
                 ReleaseDate = ReleaseDate,
@@ -25,7 +29,7 @@ namespace Models
                 Actors = Actors
             };
 
-            return dto;
+            return movie;
         }
     }
 }

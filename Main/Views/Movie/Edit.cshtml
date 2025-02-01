@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@model Models.ViewModels.MovieCategoryVM
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2>Edit a movie</h2>
+            <hr>
+        </div>
+        <div class="mb-3 p-1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="p-0">Category Name</label>
+            <input asp-for="Movie.Title" class="form-control">
+            <span asp-validation-for="Movie.Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Display Order</label>
+            <select asp-for="Movie.CategoryId" class="form-control">
+                @foreach (var item in Model.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Movie.CategoryId" class="text-danger"></span>
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Display Order</label>
+            <input asp-for="Movie.ReleaseDate" type="date" class="form-control">
+            <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Display Order</label>
+            <input asp-for="Movie.Rating" type="number" class="form-control">
+            <span asp-validation-for="Movie.Rating" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-light form-control">Submit</button>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Movie" asp-action="Index" class="btn btn-outline-primary form-control">Go back</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

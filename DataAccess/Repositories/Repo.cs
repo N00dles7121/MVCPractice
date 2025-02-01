@@ -14,12 +14,14 @@ namespace DataAccess.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public abstract Task Update(T entity);
-        public abstract Task UpdateById(int id);
-
-        public virtual async Task<List<T>> GetAll()
+        public virtual async Task<ICollection<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
+        }
+
+        public virtual ICollection<T> GetAll()
+        {
+            return _dbSet.ToList();
         }
 
         public virtual async Task<T> GetById(int id)
@@ -41,6 +43,29 @@ namespace DataAccess.Repositories
             }
 
             await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task Update(T entity)
+        {
+            if (entity == null)
+            {
+                throw new Exception("Entity is null");
+            }
+
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task UpdateById(int id)
+        {
+            var entity = await _context.Categories.FindAsync(id);
+            if (entity == null)
+            {
+                throw new Exception("Entity not found");
+            }
+
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
 

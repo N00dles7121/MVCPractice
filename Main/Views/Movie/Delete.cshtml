@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Delete Movie";
+}
+
+@model Models.DTOs.MovieDTO
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2>COnfirm movie deletion</h2>
+            <hr>
+        </div>
+        <div class="mb-3 p-1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="p-0">Title</label>
+            <input disabled asp-for="Title" class="form-control">
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Category</label>
+            <input disabled asp-for="CategoryName" class="form-control">
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Release Date</label>
+            <input disabled asp-for="ReleaseDate" type="date" class="form-control">
+        </div>
+        <div class="mb-3 p-1">
+            <label class="p-0">Rating</label>
+            <input disabled asp-for="Rating" class="form-control">
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-danger form-control">Confirm</button>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Movie" asp-action="Index" class="btn btn-outline-primary form-control">Go back</a>
+            </div>
+        </div>
+    </div>
+</form>

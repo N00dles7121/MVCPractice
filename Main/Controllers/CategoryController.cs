@@ -1,6 +1,6 @@
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using MVCPractice.Models;
+using Models;
 
 namespace MVCPractice.Controllers;
 public class CategoryController : Controller
@@ -19,8 +19,7 @@ public class CategoryController : Controller
     {
         try
         {
-            var categories = await _categoryRepo.GetAll();
-            categories.ToList();
+            var categories = await _categoryRepo.GetAllAsync();
             return View(categories);
         }
 
