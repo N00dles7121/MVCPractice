@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Models.DTOs;
 using MVCPractice.Models;
 
 namespace Models
@@ -18,5 +19,19 @@ namespace Models
         public Category? Category { get; set; }
 
         public List<Actor> Actors { get; set; } = new List<Actor>();
+
+        public MovieDTO ToDto()
+        {
+            MovieDTO dto = new MovieDTO
+            {
+                Title = Title,
+                ReleaseDate = ReleaseDate,
+                Rating = Rating,
+                CategoryId = CategoryId,
+                Actors = Actors
+            };
+
+            return dto;
+        }
     }
 }
