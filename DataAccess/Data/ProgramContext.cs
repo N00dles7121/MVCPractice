@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Models;
-using MVCPractice.Models;
 
 namespace MVCPractice.DataAccess.Data;
 public class ProgramContext : DbContext

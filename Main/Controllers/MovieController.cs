@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -105,13 +104,13 @@ namespace Main.Controllers
             try
             {
                 await _movieRepo.ExecuteUpdateAsync(movieCategoryVM.Movie, id);
-                TempData["SuccessMessage"] = "Movie created successfully!";
+                TempData["SuccessMessage"] = "Movie updated successfully!";
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                TempData["ErrorMessage"] = "An error occurred while editing the movie. Please try again.";
+                TempData["ErrorMessage"] = "An error occurred while updating the movie. Please try again.";
                 return View(_movieCategoryVM);
             }
         }
