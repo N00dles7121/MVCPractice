@@ -1,6 +1,7 @@
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.DTOs;
 using Models.ViewModels;
 
 namespace Main.Controllers
@@ -78,8 +79,8 @@ namespace Main.Controllers
         {
             try
             {
-                var movie = await _movieRepo.GetById(id);
-                _movieCategoryVM.Movie = movie.ToDto();
+                _movieCategoryVM.Movie = MovieDTO.FromModel
+                                            (await _movieRepo.GetById(id));
 
                 return View(_movieCategoryVM);
             }
@@ -120,7 +121,7 @@ namespace Main.Controllers
             try
             {
                 Movie movie = await _movieRepo.GetById(id);
-                _movieCategoryVM.Movie = movie.ToDto();
+                _movieCategoryVM.Movie = MovieDTO.FromModel(movie);
 
                 _movieCategoryVM.Movie.CategoryName = _movieCategoryVM.Categories
                                                     .First(c => c.Id == movie.CategoryId).Name;

@@ -1,6 +1,6 @@
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Models;
+using Models.DTOs;
 
 namespace MVCPractice.Controllers;
 public class CategoryController : Controller
@@ -37,7 +37,7 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Category category)
+    public async Task<IActionResult> Create(CategoryDTO category)
     {
         if (category.Name == category.DisplayOrder.ToString())
         {
@@ -51,7 +51,7 @@ public class CategoryController : Controller
 
         try
         {
-            await _categoryRepo.Add(category);
+            await _categoryRepo.Add(category.ToModel());
             TempData["SuccessMessage"] = "Category created successfully!";
 
             return RedirectToAction("Index");
@@ -68,7 +68,9 @@ public class CategoryController : Controller
     {
         try
         {
-            var category = await _categoryRepo.GetById(id);
+            CategoryDTO category = CategoryDTO.FromModel
+                                        (await _categoryRepo.GetById(id));
+
             return View(category);
         }
         catch (Exception ex)
@@ -80,7 +82,7 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Category category)
+    public async Task<IActionResult> Edit(CategoryDTO category, int id)
     {
         if (!ModelState.IsValid)
         {
@@ -89,7 +91,7 @@ public class CategoryController : Controller
 
         try
         {
-            await _categoryRepo.Update(category);
+            await _categoryRepo.ExecuteUpdateAsync(category, id);
             TempData["SuccessMessage"] = "Category updated successfully!";
 
             return RedirectToAction("Index");
@@ -106,7 +108,9 @@ public class CategoryController : Controller
     {
         try
         {
-            var category = await _categoryRepo.GetById(id);
+            CategoryDTO category = CategoryDTO.FromModel
+                                        (await _categoryRepo.GetById(id));
+
             return View(category);
         }
         catch (Exception ex)
